@@ -1,5 +1,7 @@
 import torch
 import torch.nn as nn
+import time
+from tqdm.notebook import tqdm
 
 
 class AlexNet(nn.Module):
@@ -43,3 +45,46 @@ class AlexNet(nn.Module):
         x = self.classifier(x)
 
         return x
+
+
+def train_one_epoch(model, dataloader, criterion, optimizer, num_epochs, device):
+    since = time.time()
+    best_acc = 0.0
+
+    for epoch in range(num_epochs):
+        for phase  in ['train', 'val']:
+            if phase == 'train':
+                model.train()
+            else:
+                model.eval()
+            
+            running_loss = 0.0
+            running_acc = 0
+
+            for images, labels in tqdm(dataloader[phase]):
+                images = images.to(device)
+                labels = labels.to(device)
+                optimizer.zero_grad()
+
+                with torch.set_grad_enabled(phase=='train'):
+                    out = model(images)
+                    _, preds = torch.max(out, 1)
+                    loss = criterion(out, labels)
+
+                    if phase == 'train':
+                        loss.backward()
+                        optimizer.step()
+                    
+                    running_loss += loss.item() * images.size(0)
+                    running_acc += torch.sum(preds == labels.data)
+            
+            running_losses = running_loss / len(dataloader[phase].dataset)
+            running_accs = running_acc.double() / len(dataloader[phase].dataset)
+
+            print(f'{phase} Loss: {running_losses} Acc: {running_accs}')
+        
+    time_elapsed = time.time() - since
+    print(f'training complete in {time_elapsed // 60}m {time_elapsed % 60}')
+    
+    return model
+
