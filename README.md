@@ -10,7 +10,7 @@
   1. dataset : Cat/Dog images(500여장)
   2. model
      - build : vgg11 - vgg19(선택)
-     - pretrained : vgg11 - vgg19(선택)
+     - pretrained : vgg11 - vgg19(선택) + nn.AdaptiveAvgPool2d + fc(output=2)
 
 ## 2. VGG_19_model
 - normal & Covid & Viral Pneumonia : 분류
