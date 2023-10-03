@@ -12,7 +12,10 @@
      - build : vgg11 - vgg19(선택)
      - pretrained : vgg11 - vgg19(선택) + nn.AdaptiveAvgPool2d + fc(output=2)
 
-## 2. VGG_19_model
+## 3. VGG_19_model
 - normal & Covid & Viral Pneumonia : 분류
 1. dataset : 캐글(https://www.kaggle.com/datasets/pranavraikokte/covid19-image-dataset)
 2. model : Convolutional Layer(pretrained vgg19) + nn.AdaptiveAvgPool2d + fc(output=3)
+
+## 4.ResNet
+- Cat & Dog : 분류
