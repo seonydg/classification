@@ -19,3 +19,4 @@
 
 ## 4.ResNet
 - Cat & Dog : 분류
+1. dataset : Cat/Dog images(500여장)
