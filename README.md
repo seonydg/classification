@@ -20,3 +20,4 @@
 ## 4.ResNet
 - Cat & Dog : 분류
 1. dataset : Cat/Dog images(500여장)
+2. model : ResNet Build : ver 18/34/50/101/152
