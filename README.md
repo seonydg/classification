@@ -20,4 +20,4 @@
 ## 4.ResNet
 - Cat & Dog : 분류
 1. dataset : Cat/Dog images(500여장)
-2. model : ResNet Build : ver 18/34/50/101/152
+2. model : ResNet Build : ver _18, _34 - 기본블럭 사용(3*3) / _50/_101/_152 - 병목블럭 사용(1*1)(3*3)(1*1)
