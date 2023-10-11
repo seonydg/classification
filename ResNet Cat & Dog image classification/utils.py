@@ -1,4 +1,5 @@
 import torchvision.transforms as transforms
+import torch
 from PIL import Image
 from torch.utils.data import Dataset
 
@@ -43,3 +44,28 @@ class MyDataset(Dataset):
             label = 0
         
         return image_transform, label
+    
+
+def calculate_accuracy(pred, label, k=2):
+    with torch.no_grad():
+        batch_size = label.shape[0]
+        _, top_pred = pred.topk(k, 1)
+        top_pred = top_pred.t()
+
+        correct = top_pred.eq(label.view(1, -1).expand_as(top_pred))
+        correct_1 = correct[:1].reshape(-1).float().sum(0, keepdim=True)
+        correct_k = correct[:k].reshape(-1).float().sum(0, keepdim=True)
+        acc_1 = correct_1 / batch_size
+        acc_k = correct_k / batch_size
+    
+    return acc_1, acc_k
+
+
+def epoch_time(start_time, end_time):
+    elapsed_time = end_time - start_time
+    elapsed_min = int(elapsed_time/60)
+    elapsed_sec = int(elapsed_time - (elapsed_min*60))
+
+    return elapsed_min, elapsed_sec
+
+
